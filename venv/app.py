@@ -1,9 +1,8 @@
 import streamlit as st
 
-st.title("論文共有用")
-st.caption("東北大学の文学研究科所属のカエルがお送りします．")
-st.subheader("自己紹介")
-st.text("このサイトでは，読んだ論文の概要や感想などについて述べていきます．")
+st.title("論文共有")
+st.text("東北大学　文学研究科　計算人文社会学　山口侑平")
+st.subheader("ここで論文の情報を入力をします")
 
 title = st.text_input('タイトル')
 

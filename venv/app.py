@@ -8,8 +8,8 @@ st.text("このサイトでは，読んだ論文の概要や感想などにつ�
 title = st.text_input('タイトル')
 
 # ボタン
-submit_btn = st.buttun("送信")
-cancel_btn = st.buttun("キャンセル")
+submit_btn = st.button("送信")
+cancel_btn = st.button("キャンセル")
 
 print(f'submit_btn: {submit_btn}')
 print(f'cancel_btn: {cancel_btn}')

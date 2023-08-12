@@ -10,7 +10,7 @@ st.set_page_config(
 
 
 st.title("論文共有")
-st.text("東北大学　文学研究科　計算人文社会学　やまんぬ.R")
+st.text("東北大学　文学研究科　計算人文社会学　YMGC")
 
 
 
@@ -47,6 +47,5 @@ with col1:
 
 
 with col2:
-    data = data
     st.table(data)
 

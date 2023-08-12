@@ -30,6 +30,8 @@ with col1:
         keywords = st.text_input('キーワード')
         options = ["GIS", "経済", "農業", "環境", "階層", "教育", "家族", "政治", "思想", "心理", "統計", "メディア", "その他"]
         field = st.multiselect('分野（複数選択可）', options)
+        
+with col2:
         summary = st.text_input('概要')
         method = st.text_input('用いられた手法')
         recommend = st.slider("論文の評価", min_value=0, max_value=100)
@@ -46,6 +48,6 @@ with col1:
             
 
 
-with col2:
-    st.table(data)
+
+st.table(data)
 

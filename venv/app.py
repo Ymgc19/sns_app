@@ -38,7 +38,7 @@ with col1:
     # ボタン
         submit_btn = st.form_submit_button("登録")
         cancel_btn = st.form_submit_button("キャンセル")
-        if submit_btn("登録"):
+        if submit_btn:
             data = data.append({"読んだ日": date, "タイトル": title, "著者名": author, "キーワード": keywords,
                                 "分野": field, "概要": summary, "手法": method, "評価": recommend},
                                 ignore_index=True)

@@ -16,11 +16,11 @@ st.text("東北大学　文学研究科　計算人文社会学　YMGC")
 
 col1, col2 = st.columns(2)
 
+#表を作成するためのデータフレーム
+data = pd.DataFrame(columns=["読んだ日", "タイトル", "著者名", "キーワード", "分野", "概要", "手法", "評価"])
 
-with col1:
-    #表を作成するためのデータフレーム
-    data = pd.DataFrame(columns=["読んだ日", "タイトル", "著者名", "キーワード", "分野", "概要", "手法", "評価"])
-    
+
+with col1:    
     st.subheader("論文情報の追加")
 
     with st.form(key = "論文情報の入力"):

@@ -64,7 +64,9 @@ with col1:
             #ファイル作成
             filename = f"venv/pages/{author}（{year}）.py"
             with open(filename, "w") as file:
-                file.write("st.table(df)")
+                file.write("import streamlit as st\n")
+                file.write("import pandas as pd\n")
+                file.write("st.table(filename)\n")
             
 
 

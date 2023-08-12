@@ -1,4 +1,5 @@
 import streamlit as st
+import datetime
 
 st.title("論文共有")
 st.text("東北大学　文学研究科　計算人文社会学　山口侑平")
@@ -9,6 +10,7 @@ st.subheader("ここで論文の情報を入力をします")
 
 
 with st.form(key = "論文情報の入力"):
+    date = st.date_input("読んだ日", datetime.date(2023, 8, 12))
     title = st.text_input('タイトル')
     autor = st.text_input('著者名')
     keywords = st.text_input('キーワード')
@@ -17,7 +19,6 @@ with st.form(key = "論文情報の入力"):
     summary = st.text_input('概要')
     method = st.text_input('用いられた手法')
     recommend = st.slider("論文の評価", min_value=0, max_value=100)
-    color = st.color_picker("テーマカラー", "#33FFFF")
 
 
 

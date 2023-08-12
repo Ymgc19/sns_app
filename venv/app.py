@@ -10,7 +10,7 @@ st.set_page_config(
 
 
 st.title("論文共有")
-st.text("東北大学　文学研究科　計算人文社会学　山口侑平")
+st.text("東北大学　文学研究科　計算人文社会学　やまんぬ.R")
 
 
 #表を作成するためのデータフレーム
@@ -43,7 +43,7 @@ with col1:
             data = data.append({"読んだ日": date, "タイトル": title, "著者名": author, "キーワード": keywords,
                                 "分野": field, "概要": summary, "手法": method, "評価": recommend},
                                 ignore_index=True)
-        data = data
+    data = data
 
 
 with col2:

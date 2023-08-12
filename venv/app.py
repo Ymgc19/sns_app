@@ -4,11 +4,11 @@ import pandas as pd
 
 st.title("論文共有")
 st.text("東北大学　文学研究科　計算人文社会学　山口侑平")
-st.subheader("ここで論文の情報を入力をします")
 
 col1, col2 = st.columns(2)
 
 with col1:
+    st.subheader("ここで論文の情報を入力をします")
     data = pd.DataFrame(columns=["読んだ日", "タイトル", "著者名", "キーワード", "分野", "概要", "手法", "評価"])
 
     with st.form(key = "論文情報の入力"):

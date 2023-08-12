@@ -41,7 +41,7 @@ with col1:
         cancel_btn = st.form_submit_button("キャンセル")
         if submit_btn:
             data = data
-            data = data.append({"読んだ日": date, "タイトル": title, "著者名": author, "キーワード": keywords,
+            data = data[-1].append({"読んだ日": date, "タイトル": title, "著者名": author, "キーワード": keywords,
                                 "分野": field, "概要": summary, "手法": method, "評価": recommend},
                                 ignore_index=True)
             

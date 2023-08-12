@@ -12,6 +12,8 @@ with st.form(key = "論文情報の入力"):
     title = st.text_input('タイトル')
     autor = st.text_input('著者名')
     keywords = st.text_input('キーワード')
+    options = ["GIS", "経済", "農業", "環境", "階層", "教育", "家族", "政治", "思想", "心理", "統計", "メディア", "その他"]
+    field = st.multiselect('分野（複数選択可）', options)
     summary = st.text_input('概要')
     method = st.text_input('用いられた手法')
 

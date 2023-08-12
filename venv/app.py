@@ -14,8 +14,6 @@ st.text("東北大学　文学研究科　計算人文社会学　山口侑平")
 
 col1, col2 = st.columns(2)
 
-# 表にまとめるときの形式
-
 
 with col1:
     data = pd.DataFrame(columns=["読んだ日", "タイトル", "著者名", "キーワード", "分野", "概要", "手法", "評価"])
@@ -37,9 +35,11 @@ with col1:
     # ボタン
         submit_btn = st.form_submit_button("送信")
         cancel_btn = st.form_submit_button("キャンセル")
-        if submit_btn:
-            st.text("論文情報を登録しました")
-            data = data.append({"読んだ日": date, "タイトル": title, "著者名": author, "キーワード": keywords, "分野": field, "概要": summary, "手法": method, "評価": recommend}, ignore_index=True)
+    if submit_btn:
+        st.text("論文情報を登録しました")
+        data = data.append({"読んだ日": date, "タイトル": title, "著者名": author, "キーワード": keywords,
+                            "分野": field, "概要": summary, "手法": method, "評価": recommend},
+                            ignore_index=True)
 
 
 

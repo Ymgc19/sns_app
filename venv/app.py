@@ -2,6 +2,7 @@ import streamlit as st
 import datetime
 import pandas as pd
 from PIL import Image
+import glob
 
 st.set_page_config(
     page_title="Full Screen App",
@@ -41,12 +42,6 @@ with col1:
         submit_btn = st.form_submit_button("登録")
         cancel_btn = st.form_submit_button("キャンセル")
         if submit_btn:
-            data = pd.read_csv("論文データ.csv")
-            data = data.append({"読んだ日": date, "タイトル": title, "著者名": author, "出版年": year, "キーワード": keywords,
-                                "分野": field, "概要": summary, "手法": method, "評価": recommend},
-                                ignore_index=True)
-            data.to_csv("論文データ.csv", index=False)
-
             # 書き込んだ情報に合わせてPythonファイルを作成
             #データフレーム作成
             df = pd.DataFrame({
@@ -64,8 +59,14 @@ with col1:
             #ファイル作成
             filename = f"venv/pages/{author}（{year}）.py"
             with open(filename, "w") as file:
+                file.write("import streamlit as st")
+                # ここでファイルを読み込むやつを作成
+                path = 'venv/datas/f"{author}（{year}".csv'
+                file.write(df = path)
                 file.write("st.table(df)")
             
+
+
 
 
 with col2:

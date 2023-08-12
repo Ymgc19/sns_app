@@ -13,13 +13,14 @@ st.title("論文共有")
 st.text("東北大学　文学研究科　計算人文社会学　やまんぬ.R")
 
 
-#表を作成するためのデータフレーム
-data = pd.DataFrame(columns=["読んだ日", "タイトル", "著者名", "キーワード", "分野", "概要", "手法", "評価"])
 
 col1, col2 = st.columns(2)
 
 
 with col1:
+    #表を作成するためのデータフレーム
+    data = pd.DataFrame(columns=["読んだ日", "タイトル", "著者名", "キーワード", "分野", "概要", "手法", "評価"])
+    
     st.subheader("論文情報の追加")
 
     with st.form(key = "論文情報の入力"):
@@ -42,9 +43,10 @@ with col1:
             data = data.append({"読んだ日": date, "タイトル": title, "著者名": author, "キーワード": keywords,
                                 "分野": field, "概要": summary, "手法": method, "評価": recommend},
                                 ignore_index=True)
-
+            
 
 
 with col2:
+    data = data
     st.table(data)
 

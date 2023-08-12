@@ -47,5 +47,4 @@ with col1:
 
 
 with col2:
-    st.table(data[-summary])
-
+    st.table(data)

@@ -2,6 +2,13 @@ import streamlit as st
 import datetime
 import pandas as pd
 
+st.set_page_config(
+    page_title="Full Screen App",
+    layout="wide", 
+    initial_sidebar_state="auto" 
+)
+
+
 st.title("論文共有")
 st.text("東北大学　文学研究科　計算人文社会学　山口侑平")
 

@@ -13,7 +13,6 @@ st.title("論文共有")
 st.text("東北大学　文学研究科　計算人文社会学　YMGC")
 
 
-
 col1, col2 = st.columns(2)
 
 #表を作成するためのデータフレーム
@@ -40,12 +39,14 @@ with col1:
         submit_btn = st.form_submit_button("登録")
         cancel_btn = st.form_submit_button("キャンセル")
         if submit_btn:
-            data = data
-            data = data[-1].append({"読んだ日": date, "タイトル": title, "著者名": author, "キーワード": keywords,
+            data = pd.read_csv("論文データ.csv")
+            data = data.append({"読んだ日": date, "タイトル": title, "著者名": author, "キーワード": keywords,
                                 "分野": field, "概要": summary, "手法": method, "評価": recommend},
                                 ignore_index=True)
+            data.to_csv("論文データ.csv", index=False)
             
 
 
 with col2:
+    data = pd.read_csv("論文データ.csv")
     st.table(data)

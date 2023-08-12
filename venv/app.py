@@ -16,6 +16,8 @@ with st.form(key = "論文情報の入力"):
     field = st.multiselect('分野（複数選択可）', options)
     summary = st.text_input('概要')
     method = st.text_input('用いられた手法')
+    recommend = st.slider("論文の評価", min_value=0, max_value=100)
+    color = st.color_picker("テーマカラー", "#33FFFF")
 
 
 

@@ -43,7 +43,7 @@ with col1:
             data = data.append({"読んだ日": date, "タイトル": title, "著者名": author, "キーワード": keywords,
                                 "分野": field, "概要": summary, "手法": method, "評価": recommend},
                                 ignore_index=True)
-    data = data
+            data = data
 
 
 with col2:

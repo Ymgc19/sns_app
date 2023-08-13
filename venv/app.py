@@ -75,6 +75,7 @@ with col1:
                 file.write("cast2 = '.csv'\n")
                 file.write("path = cast1 + path + cast2\n")
                 file.write("df = pd.read_csv(path)\n")
+                file.write("df = df.drop(df.columns[0], axis=1)\n")
                 file.write("st.table(df)")
             
 

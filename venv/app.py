@@ -67,8 +67,6 @@ with col1:
                 file.write("import streamlit as st\n")
                 file.write("import pandas as pd\n")
                 file.write("import os\n")
-
-                # ここがうまくいかへんのよ
                 file.write('path = __file__\n')
                 file.write("path = str(os.path.splitext(os.path.basename(path))[0])\n")
                 file.write("cast1 = 'venv/datas/'\n")
@@ -76,9 +74,15 @@ with col1:
                 file.write("path = cast1 + path + cast2\n")
                 file.write("df = pd.read_csv(path)\n")
                 file.write("df = df.drop(df.columns[0], axis=1)\n")
-                file.write("st.table(df)")
-            
-
+                file.write("st.table(df)\n")
+                # 論文に関する質問フォーム
+                file.write("comments = []\n")
+                file.write("st.subheader('論文に関する議論')\n")
+                file.write("for _ in range(len(comments)):\n")
+                file.write("    st.write(comments[_])\n")
+                file.write("comment = st.text_input('コメント')\n")
+                file.write("if st.button('送信'):\n")
+                file.write("    comments.append(comment)")
 
 with col2:
     st.subheader("読んだ論文の情報")

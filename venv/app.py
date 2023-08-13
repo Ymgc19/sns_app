@@ -66,7 +66,7 @@ with col1:
             with open(filename, "w") as file:
                 file.write("import streamlit as st\n")
                 file.write("import pandas as pd\n")
-                file.write("st.table(filename)\n")
+                file.write("st.table()")
             
 
 

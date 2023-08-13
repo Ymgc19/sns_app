@@ -66,7 +66,15 @@ with col1:
             with open(filename, "w") as file:
                 file.write("import streamlit as st\n")
                 file.write("import pandas as pd\n")
-                file.write("st.table()")
+                file.write("import os\n")
+
+                # ここがうまくいかへんのよ
+                file.write('path = __file__\n')
+                file.write("path = str(os.path.splitext(os.path.basename(path))[0])\n")
+                file.write("cast = '.csv'\n")
+                file.write("path = path + cast\n")
+                file.write("df = pd.read_csv(path)\n")
+                file.write("st.table(df)")
             
 
 

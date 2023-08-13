@@ -71,7 +71,7 @@ with col1:
                 # ここがうまくいかへんのよ
                 file.write('path = __file__\n')
                 file.write("path = str(os.path.splitext(os.path.basename(path))[0])\n")
-                file.write("cast1 = 'venv/datas\n'")
+                file.write("cast1 = 'venv/datas/'\n")
                 file.write("cast2 = '.csv'\n")
                 file.write("path = cast1 + path + cast2\n")
                 file.write("df = pd.read_csv(path)\n")

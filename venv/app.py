@@ -75,14 +75,20 @@ with col1:
                 file.write("df = pd.read_csv(path)\n")
                 file.write("df = df.drop(df.columns[0], axis=1)\n")
                 file.write("st.table(df)\n")
-                # 論文に関する質問フォーム
+
+                # 論文に関する質問フォーム（名前入力）
+                # またcsvを用意して，そこにコメントを追加していく的なことをした方がいいかもしれない
+                # 他の人が星を与える
                 file.write("comments = []\n")
                 file.write("st.subheader('論文に関する議論')\n")
                 file.write("for _ in range(len(comments)):\n")
                 file.write("    st.write(comments[_])\n")
-                file.write("comment = st.text_input('コメント')\n")
-                file.write("if st.button('送信'):\n")
-                file.write("    comments.append(comment)")
+                file.write("with st.form(key = '論文情報の入力'):\n")
+                file.write("    name = st.date_input('名前')\n")
+                file.write("    comment = st.text_input('コメント')\n")    
+                file.write("    submit_btn = st.form_submit_button('送信')\n")
+                file.write("    if submit_btn:\n")
+                file.write("        st.write('コメントを送信しました！')\n")
 
 with col2:
     st.subheader("読んだ論文の情報")

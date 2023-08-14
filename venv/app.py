@@ -95,7 +95,11 @@ with col1:
                 file.write("st.subheader('論文の詳細情報')\n")
                 file.write("df = pd.read_csv(path1)\n")
                 file.write("df = df.drop(df.columns[0], axis=1)\n")
-                file.write("st.table(df)\n")
+                # 概要を落とす → df_fixed としたらいい？
+                file.write("st.table(df)\n") #概要以外のデータを表示させる
+
+
+
                 # ここで概要だけを別表示にしたい．
 
                 # 画面を分けるために画像挿入

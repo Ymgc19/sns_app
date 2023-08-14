@@ -61,8 +61,17 @@ with col1:
                 "評価": recommend
             })
             df.to_csv(f"venv/datas/{author}（{year}）.csv")
+
+            #コメント用ファイル作成
+            column_names = ['名前', 'コメント']
+            emp_data = {col: [] for col in column_names}
+            empty_df = pd.DataFrame(emp_data)
+            empty_df.to_csv(f"venv/comments/com_{author}（{year}）.csv")
+
+
             #ファイル作成
             filename = f"venv/pages/{author}（{year}）.py"
+            filename2 = f"venv/comments/{author}（{year}）.csv"
             with open(filename, "w") as file:
                 file.write("import streamlit as st\n")
                 file.write("import pandas as pd\n")
@@ -71,24 +80,32 @@ with col1:
                 file.write("path = str(os.path.splitext(os.path.basename(path))[0])\n")
                 file.write("cast1 = 'venv/datas/'\n")
                 file.write("cast2 = '.csv'\n")
-                file.write("path = cast1 + path + cast2\n")
-                file.write("df = pd.read_csv(path)\n")
+                file.write("cast3 = 'venv/comments/com_'\n")
+                file.write("path1 = cast1 + path + cast2\n")
+                file.write("path2 = cast3 + path + cast2\n")
+                # 論文データの詳細表示
+                file.write("df = pd.read_csv(path1)\n")
                 file.write("df = df.drop(df.columns[0], axis=1)\n")
                 file.write("st.table(df)\n")
 
                 # 論文に関する質問フォーム（名前入力）
-                # またcsvを用意して，そこにコメントを追加していく的なことをした方がいいかもしれない
                 # 他の人が星を与える
-                file.write("comments = []\n")
                 file.write("st.subheader('論文に関する議論')\n")
-                file.write("for _ in range(len(comments)):\n")
-                file.write("    st.write(comments[_])\n")
+                file.write("cdf = pd.read_csv(path2)\n")
+                # コメントのcsvから最後の2列だけを取り出す．
+                file.write("cdf = cdf.iloc[:, -2:]")
+                file.write("st.table(cdf)\n")
+                # 入力フォーム
                 file.write("with st.form(key = '論文情報の入力'):\n")
-                file.write("    name = st.date_input('名前')\n")
+                file.write("    name = st.text_input('名前')\n")
                 file.write("    comment = st.text_input('コメント')\n")    
                 file.write("    submit_btn = st.form_submit_button('送信')\n")
                 file.write("    if submit_btn:\n")
                 file.write("        st.write('コメントを送信しました！')\n")
+                file.write("        to_add = pd.read_csv(path2)\n")
+                file.write("        to_add = to_add.append({'名前': name, 'コメント': comment}, ignore_index = True)\n")
+                file.write("        to_add.to_csv(path2)\n")
+
 
 with col2:
     st.subheader("読んだ論文の情報")

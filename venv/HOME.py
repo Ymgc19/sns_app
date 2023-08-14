@@ -4,7 +4,7 @@ import pandas as pd
 from PIL import Image
 import matplotlib.pyplot as plt
 import japanize_matplotlib
-
+from collections import Counter
 
 st.set_page_config(
     page_title="Full Screen App",
@@ -12,13 +12,12 @@ st.set_page_config(
     initial_sidebar_state="auto" 
 )
 
-
-st.title("DISCUTTER")
-st.text("読んだ論文を共有して議論しよう！")
-
 # ちょっとした画像を出す
 image = Image.open("pics/万行の田園風景.jpeg")
 st.image(image)
+
+st.title("DISCUTTER")
+st.text("読んだ論文を共有して議論しよう！")
 
 
 col1, col2 = st.columns(2)
@@ -87,6 +86,9 @@ with col1:
                 file.write("import pandas as pd\n")
                 file.write("import os\n")
                 file.write("from PIL import Image\n")
+                # 画面を分けるために画像挿入
+                file.write("kitchen = Image.open('pics/台所.jpeg')\n")
+                file.write("st.image(kitchen)\n")
                 file.write('path = __file__\n')
                 file.write("path = str(os.path.splitext(os.path.basename(path))[0])\n")
                 file.write("cast1 = 'venv/datas/'\n")
@@ -104,9 +106,6 @@ with col1:
 
 
 
-                # 画面を分けるために画像挿入
-                file.write("kitchen = Image.open('pics/台所.jpeg')\n")
-                file.write("st.image(kitchen)\n")
 
                 # 論文に関する質問フォーム（名前入力）
                 # 他の人が星を与える
@@ -136,17 +135,28 @@ with col2:
     data = pd.read_csv("論文データ.csv")
     data_fixed = data[["名前", "読んだ日", "タイトル", "著者名", "評価"]]
     # データが10行以上になったら，直近の10個だけを表示させたい．
-    if len(data_fixed) >= 11:
-        st.table(data_fixed.tail(10))
+    if len(data_fixed) >= 6:
+        st.table(data_fixed.tail(5))
     else:
         st.table(data_fixed)
 
-# 論文情報投稿者の割合円グラフ
+# 投稿者の割合円グラフ
     st.subheader("論文投稿者内訳")
     data_gb = data.groupby('名前').size()
     grouped_df = data_gb.reset_index(name='count') # データフレーム化
     grouped_df = grouped_df.sort_values(by='count', ascending=False)
     fig, ax = plt.subplots()
     ax.pie(grouped_df['count'], labels=grouped_df['名前'], autopct='%1.1f%%', startangle=90)
+    ax.axis('equal')  # アスペクト比を等しくする（円に近づける）
+    st.pyplot(fig)    # Streamlit上でグラフを表示
+
+# 分野割合の内訳
+# リストを分解して，出現回数で円グラフを作りたい
+    st.subheader("分野内訳")
+    data_gb = data.groupby('分野').size()
+    grouped_df = data_gb.reset_index(name='count') # データフレーム化
+    grouped_df = grouped_df.sort_values(by='count', ascending=False)
+    fig, ax = plt.subplots()
+    ax.pie(grouped_df['count'], labels=grouped_df['分野'], autopct='%1.1f%%', startangle=90)
     ax.axis('equal')  # アスペクト比を等しくする（円に近づける）
     st.pyplot(fig)    # Streamlit上でグラフを表示

@@ -4,7 +4,6 @@ import pandas as pd
 from PIL import Image
 import matplotlib.pyplot as plt
 import japanize_matplotlib
-from collections import Counter
 
 st.set_page_config(
     page_title="Full Screen App",

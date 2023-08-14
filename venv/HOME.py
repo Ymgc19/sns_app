@@ -9,8 +9,13 @@ from collections import Counter
 st.set_page_config(
     page_title="Full Screen App",
     layout="wide", 
-    initial_sidebar_state="auto" 
+    initial_sidebar_state="auto",
+    page_icon=":paintbrush:"
 )
+
+
+custom_colors = ["aquamarine", "mediumpurple", "yellow", "orange", "firebrick", "forestgreen",
+                 "hotpink", "white", "greenyellow", "deeppink", "cyan"]
 
 # ちょっとした画像を出す
 image = Image.open("pics/万行の田園風景.jpeg")
@@ -146,7 +151,7 @@ with col2:
     grouped_df = data_gb.reset_index(name='count') # データフレーム化
     grouped_df = grouped_df.sort_values(by='count', ascending=False)
     fig, ax = plt.subplots()
-    ax.pie(grouped_df['count'], labels=grouped_df['名前'], autopct='%1.1f%%', startangle=90)
+    ax.pie(grouped_df['count'], labels=grouped_df['名前'], autopct='%1.1f%%', startangle=90, colors=custom_colors)
     ax.axis('equal')  # アスペクト比を等しくする（円に近づける）
     st.pyplot(fig)    # Streamlit上でグラフを表示
 
@@ -157,6 +162,10 @@ with col2:
     grouped_df = data_gb.reset_index(name='count') # データフレーム化
     grouped_df = grouped_df.sort_values(by='count', ascending=False)
     fig, ax = plt.subplots()
-    ax.pie(grouped_df['count'], labels=grouped_df['分野'], autopct='%1.1f%%', startangle=90)
+    ax.pie(grouped_df['count'], labels=grouped_df['分野'], autopct='%1.1f%%', startangle=90, colors=custom_colors)
     ax.axis('equal')  # アスペクト比を等しくする（円に近づける）
     st.pyplot(fig)    # Streamlit上でグラフを表示
+
+
+
+# 図の色の設定が急務

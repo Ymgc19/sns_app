@@ -47,7 +47,7 @@ with col1:
                                 ignore_index=True)
             data.to_csv("論文データ.csv", index=False)
 
-            # 書き込んだ情報に合わせてPythonファイルを作成
+            #書き込んだ情報に合わせてPythonファイルを作成
             #データフレーム作成
             df = pd.DataFrame({
                 "読んだ日": date,
@@ -84,6 +84,7 @@ with col1:
                 file.write("path1 = cast1 + path + cast2\n")
                 file.write("path2 = cast3 + path + cast2\n")
                 # 論文データの詳細表示
+                file.write("st.subheader('論文の詳細情報')\n")
                 file.write("df = pd.read_csv(path1)\n")
                 file.write("df = df.drop(df.columns[0], axis=1)\n")
                 file.write("st.table(df)\n")
@@ -93,7 +94,7 @@ with col1:
                 file.write("st.subheader('論文に関する議論')\n")
                 file.write("cdf = pd.read_csv(path2)\n")
                 # コメントのcsvから最後の2列だけを取り出す．
-                file.write("cdf = cdf.iloc[:, -2:]")
+                file.write("cdf = cdf.iloc[:, -2:]\n")
                 file.write("st.table(cdf)\n")
                 # 入力フォーム
                 file.write("with st.form(key = '論文情報の入力'):\n")

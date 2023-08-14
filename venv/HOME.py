@@ -167,5 +167,3 @@ with col2:
     st.pyplot(fig)    # Streamlit上でグラフを表示
 
 
-
-# 図の色の設定が急務

@@ -13,6 +13,10 @@ st.set_page_config(
 st.title("DISCUTTER")
 st.text("読んだ論文を共有して議論しよう！")
 
+# ちょっとした画像を出す
+image = Image.open("pics/万行の田園風景.jpeg")
+st.image(image)
+
 
 col1, col2 = st.columns(2)
 
@@ -21,7 +25,7 @@ data = pd.DataFrame(columns=["読んだ日", "タイトル", "著者名", "出�
 
 
 with col1:    
-    st.subheader("議論の種を植える（全項目必須入力）")
+    st.subheader("論文情報を入力（全項目必須入力）")
 
     with st.form(key = "LET'S PLANT"):
         name = st.text_input("名前")
@@ -30,6 +34,7 @@ with col1:
         author = st.text_input('著者名')
         year = st.text_input('出版年')
         keywords = st.text_input('キーワード')
+        # 複数登録しても一個のデータフレームにまとまるようにしたい
         options = ["GIS", "経済", "農業", "環境", "階層", "教育", "家族", "政治", "思想", "心理", "統計", "メディア", "その他"]
         field = st.multiselect('分野', options)
         summary = st.text_input('概要')
@@ -78,6 +83,7 @@ with col1:
                 file.write("import streamlit as st\n")
                 file.write("import pandas as pd\n")
                 file.write("import os\n")
+                file.write("from PIL import Image\n")
                 file.write('path = __file__\n')
                 file.write("path = str(os.path.splitext(os.path.basename(path))[0])\n")
                 file.write("cast1 = 'venv/datas/'\n")
@@ -90,6 +96,11 @@ with col1:
                 file.write("df = pd.read_csv(path1)\n")
                 file.write("df = df.drop(df.columns[0], axis=1)\n")
                 file.write("st.table(df)\n")
+                # ここで概要だけを別表示にしたい．
+
+                # 画面を分けるために画像挿入
+                file.write("kitchen = Image.open('pics/台所.jpeg')\n")
+                file.write("st.image(kitchen)\n")
 
                 # 論文に関する質問フォーム（名前入力）
                 # 他の人が星を与える
@@ -109,9 +120,10 @@ with col1:
                 file.write("        to_add = to_add.append({'名前': name, 'コメント': comment}, ignore_index = True)\n")
                 file.write("        to_add.to_csv(path2)\n")
 
+st.text("論文情報を変更したい場合は，著者名と出版年を同じに設定して再度情報を登録してください．")
 
 with col2:
-    st.subheader("読んだ論文の情報")
+    st.subheader("投稿された論文情報")
     #データテーブルの表示
     data = pd.read_csv("論文データ.csv")
     data_except_summary = data[["名前", "読んだ日", "タイトル", "著者名", "評価"]]

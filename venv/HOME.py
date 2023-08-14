@@ -2,6 +2,9 @@ import streamlit as st
 import datetime
 import pandas as pd
 from PIL import Image
+import matplotlib.pyplot as plt
+import japanize_matplotlib
+
 
 st.set_page_config(
     page_title="Full Screen App",
@@ -44,7 +47,7 @@ with col1:
 
 
     # ボタン
-        submit_btn = st.form_submit_button("PLANT")
+        submit_btn = st.form_submit_button("PLANT THE SEED")
 #        cancel_btn = st.form_submit_button("キャンセル")
         if submit_btn:
             data = pd.read_csv("論文データ.csv")
@@ -95,12 +98,11 @@ with col1:
                 file.write("st.subheader('論文の詳細情報')\n")
                 file.write("df = pd.read_csv(path1)\n")
                 file.write("df = df.drop(df.columns[0], axis=1)\n")
-                # 概要を落とす → df_fixed としたらいい？
+                file.write("df = df.T\n")
+                file.write("df = df.drop(df.index[0])\n")
                 file.write("st.table(df)\n") #概要以外のデータを表示させる
 
 
-
-                # ここで概要だけを別表示にしたい．
 
                 # 画面を分けるために画像挿入
                 file.write("kitchen = Image.open('pics/台所.jpeg')\n")
@@ -109,6 +111,7 @@ with col1:
                 # 論文に関する質問フォーム（名前入力）
                 # 他の人が星を与える
                 file.write("st.subheader('論文に関する議論')\n")
+                file.write("st.text('最新のコメントを読み込むにはブラウザをリロードしてください')\n")
                 file.write("cdf = pd.read_csv(path2)\n")
                 # コメントのcsvから最後の2列だけを取り出す．
                 file.write("cdf = cdf.iloc[:, -2:]\n")
@@ -124,13 +127,26 @@ with col1:
                 file.write("        to_add = to_add.append({'名前': name, 'コメント': comment}, ignore_index = True)\n")
                 file.write("        to_add.to_csv(path2)\n")
 
-st.text("論文情報を変更したい場合は，著者名と出版年を同じに設定して再度情報を登録してください．")
+
+st.text("論文情報を変更したい場合は，著者名と出版年を同じにして再度情報を登録してください．")
 
 with col2:
-    st.subheader("投稿された論文情報")
+    st.subheader("最近投稿された論文情報")
     #データテーブルの表示
     data = pd.read_csv("論文データ.csv")
-    data_except_summary = data[["名前", "読んだ日", "タイトル", "著者名", "評価"]]
-    st.table(data_except_summary)
+    data_fixed = data[["名前", "読んだ日", "タイトル", "著者名", "評価"]]
+    # データが10行以上になったら，直近の10個だけを表示させたい．
+    if len(data_fixed) >= 11:
+        st.table(data_fixed.tail(10))
+    else:
+        st.table(data_fixed)
 
-    #読んだ日付によってヒストグラム的なものを作成
+# 論文情報投稿者の割合円グラフ
+    st.subheader("論文投稿者内訳")
+    data_gb = data.groupby('名前').size()
+    grouped_df = data_gb.reset_index(name='count') # データフレーム化
+    grouped_df = grouped_df.sort_values(by='count', ascending=False)
+    fig, ax = plt.subplots()
+    ax.pie(grouped_df['count'], labels=grouped_df['名前'], autopct='%1.1f%%', startangle=90)
+    ax.axis('equal')  # アスペクト比を等しくする（円に近づける）
+    st.pyplot(fig)    # Streamlit上でグラフを表示

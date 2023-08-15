@@ -139,7 +139,7 @@ with col2:
     st.subheader("最近投稿された論文情報")
     #データテーブルの表示
     data = pd.read_csv("論文データ.csv")
-    data_fixed = data[["名前", "読んだ日", "タイトル", "著者名", "評価"]]
+    data_fixed = data[["名前", "読んだ日", "[{'タイトル'}](https://www.google.com)", "著者名", "評価"]]
     # データが10行以上になったら，直近の10個だけを表示させたい．
     if len(data_fixed) >= 6:
         st.table(data_fixed.tail(5))

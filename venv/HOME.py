@@ -76,6 +76,7 @@ with col1:
             })
             df.to_csv(f"sns_app/venv/datas/{author}（{year}）.csv")
 
+
             #コメント用ファイル作成
             column_names = ['名前', 'コメント']
             emp_data = {col: [] for col in column_names}

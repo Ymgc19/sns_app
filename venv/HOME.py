@@ -3,8 +3,8 @@ import datetime
 import pandas as pd
 from PIL import Image
 import matplotlib.pyplot as plt
-plt.use('Agg')  # バックエンドをAggに設定
-import japanize_matplotlib
+# plt.use('Agg')  # バックエンドをAggに設定
+# import japanize_matplotlib
 
 st.set_page_config(
     page_title="Full Screen App",

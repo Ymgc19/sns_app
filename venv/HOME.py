@@ -74,7 +74,7 @@ with col1:
                 "手法": method,
                 "評価": recommend
             })
-            df.to_csv(f"sns_app/venv/datas/{author}（{year}）.csv")
+            df.to_csv(f"venv/datas/{author}（{year}）.csv")
 
 
             #コメント用ファイル作成
@@ -85,8 +85,8 @@ with col1:
 
 
             #ファイル作成
-            filename = f"sns_app/venv/pages/{author}（{year}）.py"
-            filename2 = f"sns_app/venv/comments/{author}（{year}）.csv"
+            filename = f"venv/pages/{author}（{year}）.py"
+            filename2 = f"venv/comments/{author}（{year}）.csv"
             with open(filename, "w") as file:
                 file.write("import streamlit as st\n")
                 file.write("import pandas as pd\n")

@@ -84,7 +84,7 @@ with col1:
             empty_df.to_csv(f"venv/comments/com_{author}（{year}）.csv")
 
             #ファイル作成
-            filename = f"venv/pages/{author}（{year}）- {title}）.py"
+            filename = f"venv/pages/{author}（{year}）- {title}.py"
             filename2 = f"venv/comments/{author}（{year}）.csv"
             with open(filename, "w") as file:
                 file.write("import streamlit as st\n")

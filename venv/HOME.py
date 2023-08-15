@@ -81,7 +81,7 @@ with col1:
             column_names = ['名前', 'コメント']
             emp_data = {col: [] for col in column_names}
             empty_df = pd.DataFrame(emp_data)
-            empty_df.to_csv(f"sns_app/venv/comments/com_{author}（{year}）.csv")
+            empty_df.to_csv(f"venv/comments/com_{author}（{year}）.csv")
 
 
             #ファイル作成

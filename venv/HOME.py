@@ -36,7 +36,7 @@ with col1:
 
     with st.form(key = "LET'S PLANT"):
         name = st.text_input("名前")
-        date = st.date_input("読んだ日", datetime.date(2023, 8, 12))
+        date = st.date_input("読んだ日", datetime.date.today())
         title = st.text_input('タイトル')
         author = st.text_input('著者名')
         year = st.text_input('出版年')
@@ -51,7 +51,7 @@ with col1:
 
 
     # ボタン
-        submit_btn = st.form_submit_button("PLANT THE SEED")
+        submit_btn = st.form_submit_button("SUBMIT")
 #        cancel_btn = st.form_submit_button("キャンセル")
         if submit_btn:
             data = pd.read_csv("論文データ.csv")

@@ -137,7 +137,7 @@ with col1:
                 file.write("    edit_btn = st.button('SUBMIT')\n")
                 file.write("    if edit_btn:\n")
                 file.write("        edit_df.to_csv(path1)\n")
-                file.write("        st.text('変更を受け取りました！')")
+                file.write("        st.text('変更を受け取りました！')\n")
 
 
 

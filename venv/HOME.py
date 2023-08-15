@@ -74,14 +74,14 @@ with col1:
                 "手法": method,
                 "評価": recommend
             })
-            df.to_csv(f"venv/datas/{author}（{year}）.csv")
+            df.to_csv(f"venv/datas/{author}（{year}）- {title}.csv")
 
 
             #コメント用ファイル作成
             column_names = ['名前', 'コメント']
             emp_data = {col: [] for col in column_names}
             empty_df = pd.DataFrame(emp_data)
-            empty_df.to_csv(f"venv/comments/com_{author}（{year}）- {title}.csv")
+            empty_df.to_csv(f"venv/comments/com_{author}（{year}）.csv")
 
 
             #ファイル作成

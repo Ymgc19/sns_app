@@ -3,6 +3,7 @@ import datetime
 import pandas as pd
 from PIL import Image
 import matplotlib.pyplot as plt
+matplotlib.use('Agg')  # バックエンドをAggに設定
 import japanize_matplotlib
 
 st.set_page_config(

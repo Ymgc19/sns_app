@@ -129,9 +129,10 @@ with col1:
                 # 変更するのが読んだ日の場合
                 file.write("        elif selected_koumoku == '読んだ日':\n")
                 file.write("                henkou = st.date_input('読んだ日', datetime.date.today())\n")
-                file.write("                df.at[0, selected_koumoku] = henkou\n")
-                file.write("                df.to_csv(path1)\n")
-                file.write("                st.text('変更を受け取りました！')\n")
+                file.write("                if st.button('入力完了'):\n")
+                file.write("                    df.at[0, selected_koumoku] = henkou\n")
+                file.write("                    df.to_csv(path1)\n")
+                file.write("                    st.text('変更を受け取りました！')\n")
                 # 変更するのが評価の場合
                 file.write("        elif selected_koumoku == '評価':\n")
                 file.write("                henkou = st.slider('論文の評価', min_value=0, max_value=100)\n")

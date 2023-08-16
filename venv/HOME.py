@@ -111,33 +111,33 @@ with col1:
                 # ここで論文情報の編集をできるようにする
                 file.write("koumoku = ['名前', '読んだ日', 'タイトル', '著者名', '出版年', 'キーワード', '分野', '概要', '手法', '評価']\n")
                 file.write("options = ['GIS', '経済', '農業', '環境', '階層', '教育', '家族', '政治', '思想', '心理', '統計', 'メディア', 'その他']\n")
-                file.write("btn = st.button('EDIT')\n")
-                file.write("if btn:\n")
+
                 # 変更対象のデータを読み込む
                 # 変更する項目の変更
-                file.write("    selected_koumoku = st.selectbox('編集する項目', koumoku)\n")
-                file.write("    kakutei = st.button('CONFIRM')\n")
-                file.write("    if kakutei:\n")
-                file.write("        st.write('選択する項目:', selected_koumoku)\n")
+                file.write("st.header('論文情報の変更')\n")
+                file.write("selected_koumoku = st.selectbox('編集する項目', koumoku)\n")
+                file.write("kakutei = st.button('CONFIRM')\n")
+                file.write("if kakutei:\n")
+                file.write("    st.write('選択する項目:', selected_koumoku)\n")
                 # 変更するのが分野の場合
-                file.write("        if selected_koumoku == '分野':\n")
-                file.write("            henkou = st.multiselect('分野', options)\n")
+                file.write("    if selected_koumoku == '分野':\n")
+                file.write("        henkou = st.multiselect('分野', options)\n")
                 # 変更するのが読んだ日の場合
-                file.write("        elif selected_koumoku == '読んだ日':\n")
-                file.write("            henkou = st.date_input('変更後', datetime.date.today())\n")
+                file.write("    elif selected_koumoku == '読んだ日':\n")
+                file.write("        henkou = st.date_input('変更後', datetime.date.today())\n")
                 # 変更するのが評価の場合
-                file.write("        elif selected_koumoku == '評価':\n")
-                file.write("            henkou = st.slider('論文の評価', min_value=0, max_value=100)\n")
+                file.write("    elif selected_koumoku == '評価':\n")
+                file.write("        henkou = st.slider('論文の評価', min_value=0, max_value=100)\n")
                 # 変更するのが自由記述欄の場合
-                file.write("        else:\n")
-                file.write("            henkou = st.text_input('変更後の内容を入力')\n")
+                file.write("    else:\n")
+                file.write("        henkou = st.text_input('変更後の内容を入力')\n")
                 # 変更内容を書き換え
-                file.write("        df.at[1, f'{selected_koumoku}'] = henkou\n")
+                file.write("    df.at[1, f'{selected_koumoku}'] = henkou\n")
                 # 変更の実装
-                file.write("        edit_btn = st.button('SUBMIT')\n")
-                file.write("        if edit_btn:\n")
-                file.write("            df.to_csv(path1)\n")
-                file.write("            st.text('変更を受け取りました！')\n")
+                file.write("    edit_btn = st.button('SUBMIT')\n")
+                file.write("    if edit_btn:\n")
+                file.write("        df.to_csv(path1)\n")
+                file.write("        st.text('変更を受け取りました！')\n")
 
 
 

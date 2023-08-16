@@ -53,7 +53,7 @@ with col1:
     # ボタン
         submit_btn = st.form_submit_button("SUBMIT")
 #        cancel_btn = st.form_submit_button("キャンセル")
-        if submit_btn:
+    if submit_btn:
             data = pd.read_csv("論文データ.csv")
             data = data.append({"名前": name, "読んだ日": date, "タイトル": title, "著者名": author, "出版年": year, "キーワード": keywords,
                                 "分野": field, "概要": summary, "手法": method, "評価": recommend},
@@ -109,46 +109,43 @@ with col1:
                 file.write("st.table(df.T)\n")
 
                 # ここで論文情報の編集をできるようにする
+                file.write("st.subheader('論文情報の変更')\n")
                 file.write("koumoku = ['名前', '読んだ日', 'タイトル', '著者名', '出版年', 'キーワード', '分野', '概要', '手法', '評価']\n")
                 file.write("options = ['GIS', '経済', '農業', '環境', '階層', '教育', '家族', '政治', '思想', '心理', '統計', 'メディア', 'その他']\n")
-
-                # 変更する項目の変更
-                file.write("st.subheader('論文情報の変更')\n")
-                file.write("selected_koumoku = st.selectbox('編集する項目', koumoku)\n")
-                file.write("kakutei = st.button('CONFIRM')\n")
-                file.write("if kakutei:\n")
+                # form形式にするのがいいかもしれない
+                # 変更する項目の選択
+                file.write("with st.form(key = '変更項目の選択'):\n")
+                file.write("    selected_koumoku = st.selectbox('変更する項目', koumoku)\n")
+                file.write("    koumoku_btn = st.form_submit_button('CHOOSE')\n")
+                file.write("if koumoku_btn:\n")
                 # 変更するのが分野の場合
-                file.write("    if selected_koumoku == '分野':\n")
-                file.write("        henkou = st.multiselect('変更後', options)\n")
-                file.write("        edit_btn = st.button('SUBMIT')\n")
-                file.write("        if edit_btn:\n")
-                file.write("            df.at[0, selected_koumoku] = henkou\n")
-                file.write("            df.to_csv(path1)\n")
-                file.write("            st.text('変更を受け取りました！')\n")
+                file.write("        if selected_koumoku == '分野':\n")
+                file.write("                henkou = st.multiselect('変更後', options)\n")
+                file.write("                if st.button('入力完了'):\n")
+                file.write("                    df.at[0, selected_koumoku] = henkou\n")
+                file.write("                    df.to_csv(path1)\n")
+                file.write("                    st.text('変更を受け取りました！')\n")
+
                 # 変更するのが読んだ日の場合
-                file.write("    elif selected_koumoku == '読んだ日':\n")
-                file.write("        henkou = st.date_input('変更後', datetime.date.today())\n")
-                file.write("        edit_btn = st.button('SUBMIT')\n")
-                file.write("        if edit_btn:\n")
-                file.write("            df.at[0, selected_koumoku] = henkou\n")
-                file.write("            df.to_csv(path1)\n")
-                file.write("            st.text('変更を受け取りました！')\n")
+                file.write("        elif selected_koumoku == '読んだ日':\n")
+                file.write("                henkou = st.date_input('読んだ日', datetime.date.today())\n")
+                file.write("                df.at[0, selected_koumoku] = henkou\n")
+                file.write("                df.to_csv(path1)\n")
+                file.write("                st.text('変更を受け取りました！')\n")
                 # 変更するのが評価の場合
-                file.write("    elif selected_koumoku == '評価':\n")
-                file.write("        henkou = st.slider('変更後', min_value=0, max_value=100)\n")
-                file.write("        edit_btn = st.button('SUBMIT')\n")
-                file.write("        if edit_btn:\n")
-                file.write("            df.at[0, selected_koumoku] = henkou\n")
-                file.write("            df.to_csv(path1)\n")
-                file.write("            st.text('変更を受け取りました！')\n")
+                file.write("        elif selected_koumoku == '評価':\n")
+                file.write("                henkou = st.slider('論文の評価', min_value=0, max_value=100)\n")
+                file.write("                if st.button('入力完了'):\n")
+                file.write("                    df.at[0, selected_koumoku] = henkou\n")
+                file.write("                    df.to_csv(path1)\n")
+                file.write("                    st.text('変更を受け取りました！')\n")
                 # 変更するのが自由記述欄の場合
-                file.write("    else:\n")
-                file.write("        henkou = st.text_input('変更後')\n")
-                file.write("        edit_btn = st.button('SUBMIT')\n")
-                file.write("        if edit_btn:\n")
-                file.write("            df.at[0, selected_koumoku] = henkou\n")
-                file.write("            df.to_csv(path1)\n")
-                file.write("            st.text('変更を受け取りました！')\n")
+                file.write("        else:\n")
+                file.write("                henkou = st.text_input('変更内容の入力')\n")
+                file.write("                if st.button('入力完了'):\n")
+                file.write("                    df.at[0, selected_koumoku] = henkou\n")
+                file.write("                    df.to_csv(path1)\n")
+                file.write("                    st.text('変更を受け取りました！')\n")
 
 
 
@@ -174,7 +171,7 @@ with col1:
                 file.write("        to_add.to_csv(path2)\n")
 
 
-st.text("論文情報を変更したい場合は，著者名と出版年を同じにして再度情報を登録してください．")
+    st.text("論文情報を変更したい場合は，著者名と出版年を同じにして再度情報を登録してください．")
 
 with col2:
     st.subheader("最近投稿された論文情報")

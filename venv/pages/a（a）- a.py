@@ -17,25 +17,28 @@ df = pd.read_csv(path1)
 df = df.drop(df.columns[0], axis=1)
 df = df.T
 st.table(df)
-btn = st.button('EDIT')
 koumoku = ['名前', '読んだ日', 'タイトル', '著者名', '出版年', 'キーワード', '分野', '概要', '手法', '評価']
 options = ['GIS', '経済', '農業', '環境', '階層', '教育', '家族', '政治', '思想', '心理', '統計', 'メディア', 'その他']
+btn = st.button('EDIT')
 if btn:
     edit_df = pd.read_csv(path1)
     selected_koumoku = st.selectbox('編集する項目', koumoku)
-    if selected_koumoku == '分野':
-        henkou = st.multiselect('分野', options)
-    elif selected_koumoku == '読んだ日':
-        henkou = st.date_input('変更後', datetime.date.today())
-    elif selected_koumoku == '評価':
-        henkou = st.slider('論文の評価', min_value=0, max_value=100)
-    else:
-        henkou = st.text_input('変更後の内容を入力')
-    edit_df.at[1, f'{selected_koumoku}'] = henkou
-    edit_btn = st.button('SUBMIT')
-    if edit_btn:
-        edit_df.to_csv(path1)
-        st.text('変更を受け取りました！')
+    kakutei = st.button('CONFIRM')
+    if kakutei:
+        st.write('選択する項目:', selected_koumoku)
+        if selected_koumoku == '分野':
+            henkou = st.multiselect('分野', options)
+        elif selected_koumoku == '読んだ日':
+            henkou = st.date_input('変更後', datetime.date.today())
+        elif selected_koumoku == '評価':
+            henkou = st.slider('論文の評価', min_value=0, max_value=100)
+        else:
+            henkou = st.text_input('変更後の内容を入力')
+        edit_df.at[1, f'{selected_koumoku}'] = henkou
+        edit_btn = st.button('SUBMIT')
+        if edit_btn:
+            edit_df.to_csv(path1)
+            st.text('変更を受け取りました！')
 st.subheader('論文に関する議論')
 st.text('最新のコメントを読み込むにはブラウザをリロードしてください')
 cdf = pd.read_csv(path2)

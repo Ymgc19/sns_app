@@ -103,7 +103,7 @@ with col1:
                 file.write("path1 = cast1 + path + cast2\n")
                 file.write("path2 = cast3 + path + cast2\n")
                 # 論文データの詳細表示
-                file.write("st.subheader('論文の詳細情報')\n")
+                file.write("st.header('論文の詳細情報')\n")
                 file.write("df = pd.read_csv(path1)\n")
                 file.write("df = df.drop(df.columns[0], axis=1)\n")
                 file.write("st.table(df.T)\n")
@@ -112,32 +112,43 @@ with col1:
                 file.write("koumoku = ['名前', '読んだ日', 'タイトル', '著者名', '出版年', 'キーワード', '分野', '概要', '手法', '評価']\n")
                 file.write("options = ['GIS', '経済', '農業', '環境', '階層', '教育', '家族', '政治', '思想', '心理', '統計', 'メディア', 'その他']\n")
 
-                # 変更対象のデータを読み込む
                 # 変更する項目の変更
-                file.write("st.header('論文情報の変更')\n")
+                file.write("st.subheader('論文情報の変更')\n")
                 file.write("selected_koumoku = st.selectbox('編集する項目', koumoku)\n")
                 file.write("kakutei = st.button('CONFIRM')\n")
                 file.write("if kakutei:\n")
-                file.write("    st.write('選択する項目:', selected_koumoku)\n")
                 # 変更するのが分野の場合
                 file.write("    if selected_koumoku == '分野':\n")
-                file.write("        henkou = st.multiselect('分野', options)\n")
+                file.write("        henkou = st.multiselect('変更後', options)\n")
+                file.write("        edit_btn = st.button('SUBMIT')\n")
+                file.write("        if edit_btn:\n")
+                file.write("            df.at[0, selected_koumoku] = henkou\n")
+                file.write("            df.to_csv(path1)\n")
+                file.write("            st.text('変更を受け取りました！')\n")
                 # 変更するのが読んだ日の場合
                 file.write("    elif selected_koumoku == '読んだ日':\n")
                 file.write("        henkou = st.date_input('変更後', datetime.date.today())\n")
+                file.write("        edit_btn = st.button('SUBMIT')\n")
+                file.write("        if edit_btn:\n")
+                file.write("            df.at[0, selected_koumoku] = henkou\n")
+                file.write("            df.to_csv(path1)\n")
+                file.write("            st.text('変更を受け取りました！')\n")
                 # 変更するのが評価の場合
                 file.write("    elif selected_koumoku == '評価':\n")
-                file.write("        henkou = st.slider('論文の評価', min_value=0, max_value=100)\n")
+                file.write("        henkou = st.slider('変更後', min_value=0, max_value=100)\n")
+                file.write("        edit_btn = st.button('SUBMIT')\n")
+                file.write("        if edit_btn:\n")
+                file.write("            df.at[0, selected_koumoku] = henkou\n")
+                file.write("            df.to_csv(path1)\n")
+                file.write("            st.text('変更を受け取りました！')\n")
                 # 変更するのが自由記述欄の場合
                 file.write("    else:\n")
-                file.write("        henkou = st.text_input('変更後の内容を入力')\n")
-                # 変更内容を書き換え
-                file.write("    df.at[1, f'{selected_koumoku}'] = henkou\n")
-                # 変更の実装
-                file.write("    edit_btn = st.button('SUBMIT')\n")
-                file.write("    if edit_btn:\n")
-                file.write("        df.to_csv(path1)\n")
-                file.write("        st.text('変更を受け取りました！')\n")
+                file.write("        henkou = st.text_input('変更後')\n")
+                file.write("        edit_btn = st.button('SUBMIT')\n")
+                file.write("        if edit_btn:\n")
+                file.write("            df.at[0, selected_koumoku] = henkou\n")
+                file.write("            df.to_csv(path1)\n")
+                file.write("            st.text('変更を受け取りました！')\n")
 
 
 
@@ -145,7 +156,7 @@ with col1:
 
                 # 論文に関する質問フォーム（名前入力）
                 # 他の人が星を与える
-                file.write("st.subheader('論文に関する議論')\n")
+                file.write("st.header('論文に関する議論')\n")
                 file.write("st.text('最新のコメントを読み込むにはブラウザをリロードしてください')\n")
                 file.write("cdf = pd.read_csv(path2)\n")
                 # コメントのcsvから最後の2列だけを取り出す．

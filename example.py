@@ -1,8 +1,20 @@
 import pandas as pd
+import os
 
-df = pd.read_csv("論文データ.csv")
+df = pd.read_csv("venv/datas/山口（2022）- コモンズの現代的課題とその解決.csv")
 
-df = df["読んだ日"]
-data_gb = df.groupby('読んだ日').size()
+#print(df.at[0, "名前"])
 
-print(data_gb)
+
+#path = __file__
+#path = str(os.path.splitext(os.path.basename(path))[0])
+#print(path)
+
+
+df["評価"][0] = 1234
+
+print(df["評価"][0])
+
+df.to_csv("venv/datas/a（a）- a.csv")
+
+print(df.dtypes)

@@ -13,6 +13,9 @@ st.set_page_config(
     page_icon=":paintbrush:"
 )
 
+# 今後アップデート予定
+# 検索機能
+
 
 custom_colors = ["aquamarine", "mediumpurple", "yellow", "orange", "firebrick", "forestgreen",
                  "hotpink", "white", "greenyellow", "deeppink", "cyan"]
@@ -62,19 +65,14 @@ with col1:
 
             #書き込んだ情報に合わせてPythonファイルを作成
             #データフレーム作成
-            df = pd.DataFrame({
-                "名前": name,
-                "読んだ日": date,
-                "タイトル": title,
-                "著者名": author,
-                "出版年": year,
-                "キーワード": keywords,
-                "分野": field,
-                "概要": summary,
-                "手法": method,
-                "評価": recommend
-            })
-            df.to_csv(f"venv/datas/{author}（{year}）- {title}.csv")
+            #templateを読み込んでそこにappendする形式
+            template = pd.read_csv("venv/datas/template.csv")
+            #templateに情報を追加する
+            template = template.appemd({"名前": name, "読んだ日": date, "タイトル": title, "著者名": author, "出版年": year, "キーワード": keywords,
+                                "分野": field, "概要": summary, "手法": method, "評価": recommend},
+                                ignore_index=True)
+            #書き出す
+            template.to_csv(f"venv/datas/{author}（{year}）- {title}.csv")
 
 
             #コメント用ファイル作成
@@ -87,6 +85,7 @@ with col1:
             filename = f"venv/pages/{author}（{year}）- {title}.py"
             filename2 = f"venv/comments/{author}（{year}）- {title}.csv"
             with open(filename, "w") as file:
+                # ここでワイド画面に表示させる設置もしないといけない
                 file.write("import datetime\n")
                 file.write("import streamlit as st\n")
                 file.write("import pandas as pd\n")
@@ -112,46 +111,45 @@ with col1:
                 file.write("st.subheader('論文情報の変更')\n")
                 file.write("koumoku = ['名前', '読んだ日', 'タイトル', '著者名', '出版年', 'キーワード', '分野', '概要', '手法', '評価']\n")
                 file.write("options = ['GIS', '経済', '農業', '環境', '階層', '教育', '家族', '政治', '思想', '心理', '統計', 'メディア', 'その他']\n")
-                # form形式にするのがいいかもしれない
-                # 変更する項目の選択
-                file.write("with st.form(key = '変更項目の選択'):\n")
-                file.write("    selected_koumoku = st.selectbox('変更する項目', koumoku)\n")
-                file.write("    koumoku_btn = st.form_submit_button('CHOOSE')\n")
-                file.write("if koumoku_btn:\n")
-                # 変更するのが分野の場合
-                # もう一度csvを読み込むスタイルする？
-                file.write("        if selected_koumoku == '分野':\n")
-                file.write("                henkou = st.multiselect('変更後', options)\n")
-                file.write("                df = pd.read_csv(path1)\n")
-                file.write("                if st.button('入力完了') and henkou:\n")
-                file.write("                    df.at[0, '分野'] = henkou\n")
-                file.write("                    df.to_csv(path1)\n")
-                file.write("                    st.text('変更を受け取りました！')\n")
-
+                # 編集ボタンを作成
+                file.write("koumoku_select = st.selectbox('編集する項目', koumoku)\n")
+                file.write("edit_btn = st.button('選択した項目を編集する')\n")
+                file.write("if edit_btn:\n")
+                file.write("    df = pd.read_csv(path1)\n")
+                file.write("    df['column 0'] = df['column 0'].astype(int)\n")
                 # 変更するのが読んだ日の場合
-                file.write("        elif selected_koumoku == '読んだ日':\n")
-                file.write("                henkou = st.date_input('読んだ日', datetime.date.today())\n")
-                file.write("                df = pd.read_csv(path1)\n")
-                file.write("                if st.button('入力完了') and henkou:\n")
-                file.write("                    df.at[0, '読んだ日'] = henkou\n")
-                file.write("                    df.to_csv(path1)\n")
-                file.write("                    st.text('変更を受け取りました！')\n")
+                file.write("    if koumoku_select == '読んだ日':\n")
+                file.write("        with st.form(key = 'date'):\n")
+                file.write("            henko = st.date_input('読んだ日', datetime.date.today())\n")
+                file.write("            confirm_btn = st.form_submit_button('CONFIRM')\n")
+                file.write("        if confirm_btn and henko:\n")
+                file.write("            df[koumoku_select][0] = henko\n")
+                file.write("            df.to_csv(path1)\n")
+                # 変更するのが分野の場合
+                file.write("    elif koumoku_select == '分野':\n")
+                file.write("        with st.form(key = 'field'):\n")
+                file.write("            henko = st.multiselect('分野', options)\n")
+                file.write("            confirm_btn = st.form_submit_button('CONFIRM')\n")
+                file.write("        if confirm_btn and henko:\n")
+                file.write("            df[koumoku_select][0] = henko\n")
+                file.write("            df.to_csv(path1)\n")
                 # 変更するのが評価の場合
-                file.write("        elif selected_koumoku == '評価':\n")
-                file.write("                henkou = st.slider('論文の評価', min_value=0, max_value=100)\n")
-                file.write("                df = pd.read_csv(path1)\n")
-                file.write("                if st.button('入力完了') and henkou:\n")
-                file.write("                    df.at[0, '評価'] = henkou\n")
-                file.write("                    df.to_csv(path1)\n")
-                file.write("                    st.text('変更を受け取りました！')\n")
-                # 変更するのが自由記述欄の場合
-                file.write("        else:\n")
-                file.write("                henkou = st.text_input('変更内容の入力')\n")
-                file.write("                df = pd.read_csv(path1)\n")
-                file.write("                if st.button('入力完了') and henkou:\n")
-                file.write("                    df.at[0, selected_koumoku] = henkou\n")
-                file.write("                    df.to_csv(path1)\n")
-                file.write("                    st.text('変更を受け取りました！')\n")
+                file.write("    elif koumoku_select == '評価':\n")
+                file.write("        with st.form(key = 'eval'):\n")
+                file.write("            henko = st.slider('論文の評価', min_value=0, max_value=100)\n")
+                file.write("            confirm_btn = st.form_submit_button('CONFIRM')\n")
+                file.write("        if confirm_btn and henko:\n")
+                file.write("            df[koumoku_select][0] = henko\n")
+                file.write("            df.to_csv(path1)\n")
+                # 変更するのが記述欄の場合
+                file.write("    else:\n")
+                file.write("        with st.form(key = 'other'):\n")
+                file.write("            henko = st.text_input('変更後の内容')\n")
+                file.write("            confirm_btn = st.form_submit_button('CONFIRM')\n")
+                file.write("        if confirm_btn and henko:\n")
+                file.write("            df[koumoku_select][0] = str(henko)\n")
+                file.write("            df.to_csv(path1)\n")
+                
 
 
 

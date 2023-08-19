@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 
-df = pd.read_csv("venv/datas/a（a）- a.csv")
+df = pd.read_csv("venv/datas/山口（2022）- コモンズの現代的課題とその解決.csv")
 
 #print(df.at[0, "名前"])
 
@@ -16,3 +16,5 @@ df["評価"][0] = 1234
 print(df["評価"][0])
 
 df.to_csv("venv/datas/a（a）- a.csv")
+
+print(df.dtypes)

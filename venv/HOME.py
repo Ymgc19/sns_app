@@ -5,6 +5,7 @@ from PIL import Image
 import matplotlib.pyplot as plt
 # plt.use('Agg')  # バックエンドをAggに設定
 import japanize_matplotlib
+import os
 
 st.set_page_config(
     page_title="Full Screen App",
@@ -182,21 +183,48 @@ with col1:
 
 
     st.text("論文情報を変更したい場合は，著者名と出版年を同じにして再度情報を登録してください．")
+    
+    image = Image.open("pics/IMG_4584.JPG")
+    st.image(image)
 
 with col2:
+
+    #　投稿された論文情報の仕様変更工事
     st.subheader("最近投稿された論文情報")
+
+    # フォルダのパスを指定
+    folder_path = 'venv/datas'
+
+    # フォルダ内の全てのCSVファイルのファイル名を取得
+    csv_files = [file for file in os.listdir(folder_path) if file.endswith('.csv')]
+
+    # CSVファイルを結合するための空のDataFrameを作成
+    combined_data = pd.DataFrame()
+
+    # 各CSVファイルを読み込んで結合
+    for csv_file in csv_files:
+        file_path = os.path.join(folder_path, csv_file)
+        data = pd.read_csv(file_path)
+        combined_data = combined_data.append(data, ignore_index=True)
+    
+    st.table(combined_data)
+
+
+
+
+
     #データテーブルの表示
-    data = pd.read_csv("論文データ.csv")
-    data_fixed = data[["名前", "読んだ日", 'タイトル', "著者名", "評価"]]
+#    data = pd.read_csv("論文データ.csv")
+#    data_fixed = data[["名前", "読んだ日", 'タイトル', "著者名", "評価"]]
     # データが10行以上になったら，直近の10個だけを表示させたい．
-    if len(data_fixed) >= 6:
-        st.table(data_fixed.tail(5))
-    else:
-        st.table(data_fixed)
+#    if len(data_fixed) >= 6:
+#        st.table(data_fixed.tail(5))
+#    else:
+#        st.table(data_fixed)
 
 # 投稿者の割合円グラフ
     st.subheader("論文投稿者内訳")
-    data_gb = data.groupby('名前').size()
+    data_gb = combined_data.groupby('名前').size()
     grouped_df = data_gb.reset_index(name='count') # データフレーム化
     grouped_df = grouped_df.sort_values(by='count', ascending=False)
     fig, ax = plt.subplots()
@@ -207,7 +235,7 @@ with col2:
 # 分野割合の内訳
 # リストを分解して，出現回数で円グラフを作りたい
     st.subheader("分野内訳")
-    data_gb = data.groupby('分野').size()
+    data_gb = combined_data.groupby('分野').size()
     grouped_df = data_gb.reset_index(name='count') # データフレーム化
     grouped_df = grouped_df.sort_values(by='count', ascending=False)
     fig, ax = plt.subplots()
